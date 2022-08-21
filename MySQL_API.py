@@ -3,16 +3,21 @@ from flask import Flask,jsonify,request,make_response,url_for,redirect
 #import requests, json
 
 app = Flask(__name__)
+db = MySQLdb.connect("localhost", "root", "mysqladmin")
+# prepare a cursor object using cursor() method
+cursor = db.cursor()
+# Open database connection
+cursor.execute("Create database if not exists API_test")
+cursor.execute("create table if not exists API_test.MySQLtable")
+
+
+
+
 @app.route('/select',methods = ['GET','POST'])
 
 def Select():
     if(request.method=='POST'):
         import MySQLdb
-        # Open database connection
-        db = MySQLdb.connect("localhost", "root", "mysqladmin", "candystore")
-
-        # prepare a cursor object using cursor() method
-        cursor = db.cursor()
 
         sql = "SELECT * FROM candystore.employees;"
 
